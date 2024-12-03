@@ -1,7 +1,6 @@
 package com.example.TrainingJavaProject.controller;
 
-import com.example.TrainingJavaProject.dto.responses.ClientsResponse;
-import com.example.TrainingJavaProject.service.ClientsService;
+import com.example.TrainingJavaProject.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +11,16 @@ import java.util.*;
 @RequestMapping("/home")
 public class HomeController {
     @Autowired
-    ClientsService clientsService;
+    HomeService homeService;
 
-    @GetMapping("/")
+
+    @PostMapping("/functional_interface")
     @ResponseStatus(HttpStatus.OK)
-    public List<ClientsResponse> getAll() {
-        return clientsService.getAllClients();
+    public Map<String, Double> caculate(
+            @RequestParam double x,
+            @RequestParam double y
+    ) {
+        return homeService.caculate(x, y);
     }
 
 }
