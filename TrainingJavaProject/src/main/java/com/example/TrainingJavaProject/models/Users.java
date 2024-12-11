@@ -2,11 +2,13 @@ package com.example.TrainingJavaProject.models;
 
 import com.example.TrainingJavaProject.dto.responses.UsersResponse;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class Users {
