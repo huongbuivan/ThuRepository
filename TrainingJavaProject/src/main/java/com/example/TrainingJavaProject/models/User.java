@@ -11,16 +11,16 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false, unique = true)
     private int id;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, unique = true)
     private String userName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password_hash")

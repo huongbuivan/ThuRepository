@@ -1,8 +1,9 @@
 package com.example.TrainingJavaProject.controller;
 
+import com.example.TrainingJavaProject.dto.request.UserDto;
 import com.example.TrainingJavaProject.dto.responses.UsersResponse;
 import com.example.TrainingJavaProject.service.UsersService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +13,11 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    UsersService usersService;
+    private final UsersService usersService;
+
+    public UserController(UsersService usersService) {
+        this.usersService = usersService;
+    }
 
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
@@ -25,5 +29,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public List<UsersResponse> getFilterByName(@RequestParam String userName) {
         return usersService.getUsersByName(userName);
+    }
+
+    @PostMapping("/")
+    public String registerUser(@Valid @RequestBody UserDto userDto) {
+        usersService.createUser(userDto);
+        return "User registered successfully!";
     }
 }
