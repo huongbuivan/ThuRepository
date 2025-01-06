@@ -47,3 +47,7 @@ VALUES ('Team Alpha', 'A description of Team Alpha');
 -- Add a user to a team
 INSERT INTO user_teams (user_id, team_id, role)
 VALUES (1, 1, 'admin');
+
+--- Update database: Add column phone_number
+ALTER TABLE user
+ADD COLUMN phone_number VARCHAR(15) UNIQUE;
