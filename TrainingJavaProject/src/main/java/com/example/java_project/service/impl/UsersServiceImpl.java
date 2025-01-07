@@ -43,6 +43,7 @@ public class UsersServiceImpl implements UsersService {
         userRequest.setUserName(user.getUserName());
         userRequest.setPassword(hashedPassword);
         userRequest.setEmail(user.getEmail());
+        userRequest.setPhoneNumber(user.getPhoneNumber());
         userRequest.setFirstName(user.getFirstName());
         userRequest.setLastName(user.getLastName());
         usersRepository.save(userRequest);
