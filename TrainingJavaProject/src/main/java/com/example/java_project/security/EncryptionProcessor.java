@@ -1,7 +1,7 @@
 package com.example.java_project.security;
 
 import com.example.java_project.annotations.Encrypted;
-import com.example.java_project.utils.AESUtil;
+import com.example.java_project.utils.EncryptionUtil;
 
 import java.lang.reflect.Field;
 
@@ -20,7 +20,7 @@ public class EncryptionProcessor {
     }
 
     private static void processFields(Object entity, boolean encrypt) {
-        AESUtil.setSecretKey("u0TQdGKlyza2DYud3DpaPQ==");
+        EncryptionUtil.setSecretKey("u0TQdGKlyza2DYud3DpaPQ==");
         Field[] fields = entity.getClass().getDeclaredFields();
 
         for (Field field : fields) {
@@ -30,8 +30,8 @@ public class EncryptionProcessor {
                     Object value = field.get(entity);
                     if (value instanceof String strValue) {
                         String processedValue = encrypt
-                                ? AESUtil.encrypt(strValue)
-                                : AESUtil.decrypt(strValue);
+                                ? EncryptionUtil.encrypt(strValue)
+                                : EncryptionUtil.decrypt(strValue);
                         field.set(entity, processedValue);
                     }
                 } catch (Exception e) {

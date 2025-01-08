@@ -4,12 +4,12 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
-public class AESUtil {
+public class EncryptionUtil {
     private static final String AES = "AES";
     private static byte[] SECRET_KEY;
 
     // Private constructor to prevent instantiation
-    private AESUtil() {
+    private EncryptionUtil() {
         // This constructor is intentionally left empty
     }
 
