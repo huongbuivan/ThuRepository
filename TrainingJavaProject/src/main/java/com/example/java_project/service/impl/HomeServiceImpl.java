@@ -66,6 +66,19 @@ public class HomeServiceImpl implements HomeService {
         return CompletableFuture.completedFuture(usersResponse);
     }
 
+    private static String getErrorMessage(UserDto user, Exception e) {
+        String message = e.getMessage();
+        StringBuilder error = new StringBuilder("Failed to register user '" + user.getUserName());
+        // Handle unique constraint violation for Users table
+        if (message.contains("username_key")) {
+            error.append("': Username is already taken.");
+        } else if (message.contains("email_key")) {
+            error.append("': Email is already registered.");
+        } else {
+            error.append("': Duplicate entry.");
+        }
+        return error.toString();
+    }
 
     @Async
     public CompletableFuture<Response<UsersResponse>> registerUser(UserDto user) {
@@ -85,20 +98,6 @@ public class HomeServiceImpl implements HomeService {
             String error = getErrorMessage(user, e);
             return CompletableFuture.completedFuture(new Response<>(null, error));
         }
-    }
-
-    private static String getErrorMessage(UserDto user, Exception e) {
-        String message = e.getMessage();
-        StringBuilder error = new StringBuilder("Failed to register user '" + user.getUserName());
-        // Handle unique constraint violation for Users table
-        if (message.contains("username_key")) {
-            error.append("': Username is already taken.");
-        } else if (message.contains("email_key")) {
-            error.append("': Email is already registered.");
-        } else {
-            error.append("': Duplicate entry.");
-        }
-        return error.toString();
     }
 
     @Async
