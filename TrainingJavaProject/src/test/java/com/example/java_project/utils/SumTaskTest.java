@@ -8,20 +8,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class SumTaskTest {
+    private long sum(int[] numbers) {
+        ForkJoinPool pool = new ForkJoinPool();
+        try {
+            SumTask task = new SumTask(numbers, 0, numbers.length);
+            return pool.invoke(task);
+        } finally {
+            pool.shutdown();
+        }
+    }
+
     @Test
     void testSmallArray() {
         // Input array
         int[] numbers = {1, 2, 3, 4, 5};
-
         // Expected sum
         long expectedSum = 15;
-
-        // Execute SumTask
-        ForkJoinPool pool = new ForkJoinPool();
-        SumTask task = new SumTask(numbers, 0, numbers.length);
-        long result = pool.invoke(task);
-
-        // Assert
+        long result = sum(numbers);
         assertEquals(expectedSum, result);
     }
 
@@ -35,12 +38,8 @@ class SumTaskTest {
 
         // Expected sum: (n * (n + 1)) / 2 for first n natural numbers
         long expectedSum = 5050;
-
         // Execute SumTask
-        ForkJoinPool pool = new ForkJoinPool();
-        SumTask task = new SumTask(numbers, 0, numbers.length);
-        long result = pool.invoke(task);
-
+        long result = sum(numbers);
         // Assert
         assertEquals(expectedSum, result);
     }
@@ -49,15 +48,10 @@ class SumTaskTest {
     void testEmptyArray() {
         // Input array
         int[] numbers = {};
-
         // Expected sum
         long expectedSum = 0;
-
         // Execute SumTask
-        ForkJoinPool pool = new ForkJoinPool();
-        SumTask task = new SumTask(numbers, 0, numbers.length);
-        long result = pool.invoke(task);
-
+        long result = sum(numbers);
         // Assert
         assertEquals(expectedSum, result);
     }
@@ -66,15 +60,10 @@ class SumTaskTest {
     void testSingleElementArray() {
         // Input array
         int[] numbers = {42};
-
         // Expected sum
         long expectedSum = 42;
-
         // Execute SumTask
-        ForkJoinPool pool = new ForkJoinPool();
-        SumTask task = new SumTask(numbers, 0, numbers.length);
-        long result = pool.invoke(task);
-
+        long result = sum(numbers);
         assertEquals(expectedSum, result);
     }
 }

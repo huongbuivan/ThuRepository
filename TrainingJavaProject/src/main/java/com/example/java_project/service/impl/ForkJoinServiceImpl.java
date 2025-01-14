@@ -11,11 +11,11 @@ public class ForkJoinServiceImpl implements ForkJoinService {
     @Override
     public long calculateSum(int[] numbers) {
         ForkJoinPool pool = new ForkJoinPool();
-        SumTask task = new SumTask(numbers, 0, numbers.length);
-
-        long result = pool.invoke(task);
-
-        pool.shutdown();
-        return result;
+        try {
+            SumTask task = new SumTask(numbers, 0, numbers.length);
+            return pool.invoke(task);
+        } finally {
+            pool.shutdown();
+        }
     }
 }
