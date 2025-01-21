@@ -24,12 +24,12 @@ CREATE TABLE teams (
 
 -- Create a junction table for the many-to-many relationship between users and teams
 CREATE TABLE user_teams (
-    user_team_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
-    team_id INT REFERENCES teams(team_id) ON DELETE CASCADE,
-    role VARCHAR(50),  -- Role of the user in the team (e.g., 'member', 'admin')
-    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (user_id, team_id)  -- Prevent duplicate entries for the same user-team combination
+	user_team_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    team_id INT NOT NULL,
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES "users" (user_id) ON DELETE CASCADE,
+    FOREIGN KEY (team_id) REFERENCES "teams" (team_id) ON DELETE CASCADE
 );
 
 -- Optional: Add indexes for better performance on the join table
@@ -45,8 +45,8 @@ INSERT INTO teams (team_name, description)
 VALUES ('Team Alpha', 'A description of Team Alpha');
 
 -- Add a user to a team
-INSERT INTO user_teams (user_id, team_id, role)
-VALUES (1, 1, 'admin');
+INSERT INTO user_teams (user_id, team_id)
+VALUES (1, 1);
 
 --- Update database: Add column phone_number
 ALTER TABLE user
